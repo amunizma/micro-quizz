@@ -1,26 +1,53 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
-
-# Eclipse m2e generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-
-HELP.md
+# Ignorar carpetas y archivos generales de Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# Ignorar archivos de configuración del entorno de desarrollo
+*.iml
+*.log
+*.class
+*.project
+*.classpath
+*.settings/
+*.factorypath
+
+# Ignorar archivos y carpetas generadas por sistemas de construcción
+/.idea/
+/*.iml
+/.settings/
+/out/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos específicos de cada módulo (si es necesario)
+module-a/target/
+module-b/target/
+module-c/target/
+
+# Ignorar otros directorios específicos de construcción o IDE
+/.gradle/
+/.gradle/
+/build/
+/.vscode/
+/nbproject/private/
+
+# Si estás usando Windows, ignora los archivos del sistema
+*.bak
+*.swp
+*.swo
+*.swn
+*.tmp
+desktop.ini
 
 ### STS ###
 .apt_generated
@@ -30,22 +57,3 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
