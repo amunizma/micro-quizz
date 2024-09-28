@@ -53,9 +53,7 @@ public class QuestionControllerTest {
     
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(questionController).build();
-        
+       
 		questionBaseDTO = QuestionBaseDTO.builder()
     			.level("A")
     			.difficulty("1")

@@ -43,17 +43,14 @@ public class QuestionServiceImpl implements QuestionService{
 		QuestionDTO responseDTO = new QuestionDTO();
 		try {
 			responseDTO = questionMapper.toQuestionDTO(request);
-			boolean uuidValid = false;
-			while (!uuidValid) {
+			boolean uuidValid = true;
+			while (uuidValid) {
 				uuidValid = obtainIdService.existUUID(responseDTO.getQuestionId());
 				responseDTO.setQuestionId(UUID.randomUUID().toString());
 			}
 			QuestionEntity entity = questionMapper.toQuestionEntity(responseDTO);
 			questionRepository.save(entity);
 			
-		}catch(DuplicateKeyException e) {
-			//409 Conflict "clave ya existe"
-			throw new ConflictException(null);
 		}catch(DataIntegrityViolationException e1) {
 			//400 Bad Request "Data integrity violation"
 			throw new BadRequestException(null);
