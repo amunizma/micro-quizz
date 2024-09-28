@@ -1,4 +1,4 @@
-package com.github.amunizma.quizz.quizz.rest.game;
+package com.github.amunizma.quizz.rest.game;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
