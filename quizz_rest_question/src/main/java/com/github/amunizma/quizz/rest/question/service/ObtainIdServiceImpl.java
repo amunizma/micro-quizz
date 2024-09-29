@@ -1,8 +1,5 @@
 package com.github.amunizma.quizz.rest.question.service;
 
-import java.util.UUID;
-
-import com.github.amunizma.quizz.rest.question.mapper.QuestionMapper;
 import com.github.amunizma.quizz.rest.question.respository.QuestionRepository;
 
 public class ObtainIdServiceImpl implements ObtainIdService{
@@ -20,7 +17,8 @@ public class ObtainIdServiceImpl implements ObtainIdService{
 	 */
 	public boolean existUUID(String uuid) {
 		boolean exists = false;
-		long count = questionRepository.countByQuestionId(uuid);
+		long count = 0;
+		if(uuid != null && !uuid.isBlank()) count = questionRepository.countByQuestionId(uuid);
 		if(count > 0) exists = true;
 		return exists;
 	}

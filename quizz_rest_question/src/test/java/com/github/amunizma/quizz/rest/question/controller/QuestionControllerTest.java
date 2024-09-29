@@ -33,7 +33,7 @@ import com.github.amunizma.quizz.rest.question.exception.InternalServerErrorExce
 import com.github.amunizma.quizz.rest.question.service.QuestionService;
 
 @WebMvcTest(QuestionController.class)
-public class QuestionControllerTest {
+class QuestionControllerTest {
 	@Autowired
     private MockMvc mockMvc;
 
@@ -52,7 +52,7 @@ public class QuestionControllerTest {
     private QuestionDTO questionDTO ;
     
     @BeforeEach
-    public void setup() {
+    void setup() {
        
 		questionBaseDTO = QuestionBaseDTO.builder()
     			.level("A")
@@ -74,7 +74,7 @@ public class QuestionControllerTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_Created() throws Exception {
+    void completQuestionBaseDTO_createQuestion_Created() throws Exception {
 
         when(questionService.createQuestion(any(QuestionBaseDTO.class))).thenReturn(questionDTO);
 
@@ -85,7 +85,7 @@ public class QuestionControllerTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_conflictException() throws Exception {
+    void completQuestionBaseDTO_createQuestion_conflictException() throws Exception {
     	
     	doThrow(new ConflictException("Conflict Exception"))
         	.when(questionService)
@@ -98,7 +98,7 @@ public class QuestionControllerTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_badRequestException() throws Exception {
+    void completQuestionBaseDTO_createQuestion_badRequestException() throws Exception {
 
     	doThrow(new BadRequestException("Bad Request Exception"))
         	.when(questionService)
@@ -111,7 +111,7 @@ public class QuestionControllerTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_internalServerErrorException() throws Exception {
+    void completQuestionBaseDTO_createQuestion_internalServerErrorException() throws Exception {
 
     	doThrow(new InternalServerErrorException("Internal Server Error Exception"))
         	.when(questionService)
@@ -130,7 +130,7 @@ public class QuestionControllerTest {
         "''", //Representa una cadena vacía
         "'    '"
     })
-    public void incompletQuestionBaseDTOLevel_createQuestion_badRequestException(String level) throws Exception {
+    void incompletQuestionBaseDTOLevel_createQuestion_badRequestException(String level) throws Exception {
     	if ("null".equals(level)) {
     		level = null;
         }
@@ -152,7 +152,7 @@ public class QuestionControllerTest {
         "''", //Representa una cadena vacía
         "'    '"
     })
-    public void incompletQuestionBaseDTODifficulty_createQuestion_badRequestException(String difficulty) throws Exception {
+    void incompletQuestionBaseDTODifficulty_createQuestion_badRequestException(String difficulty) throws Exception {
     	if ("null".equals(difficulty)) {
     		difficulty = null;
         }
@@ -170,7 +170,7 @@ public class QuestionControllerTest {
     
     @ParameterizedTest
     @MethodSource("listParameterized")
-    public void incompletQuestionBaseDTOQuestions_createQuestion_badRequestException(List<String> questions) throws Exception {
+    void incompletQuestionBaseDTOQuestions_createQuestion_badRequestException(List<String> questions) throws Exception {
     	questionBaseDTO.setQuestions(questions);
         
         when(questionService.createQuestion(any(QuestionBaseDTO.class))).thenReturn(questionDTO);
@@ -185,7 +185,7 @@ public class QuestionControllerTest {
     
     @ParameterizedTest
     @MethodSource("listParameterized")
-    public void incompletQuestionBaseDTOCorrectAnswers_createQuestion_badRequestException(List<String> correctAnswers) throws Exception {
+    void incompletQuestionBaseDTOCorrectAnswers_createQuestion_badRequestException(List<String> correctAnswers) throws Exception {
     	questionBaseDTO.setCorrectAnswers(correctAnswers);
         
         when(questionService.createQuestion(any(QuestionBaseDTO.class))).thenReturn(questionDTO);
@@ -200,7 +200,7 @@ public class QuestionControllerTest {
     
     @ParameterizedTest
     @MethodSource("listParameterized")
-    public void incompletQuestionBaseDTOWrongAnswers_createQuestion_badRequestException(List<String> wrongAnswers) throws Exception {
+    void incompletQuestionBaseDTOWrongAnswers_createQuestion_badRequestException(List<String> wrongAnswers) throws Exception {
     	questionBaseDTO.setCorrectAnswers(wrongAnswers);
         
         when(questionService.createQuestion(any(QuestionBaseDTO.class))).thenReturn(questionDTO);

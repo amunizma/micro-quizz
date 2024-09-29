@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 //	            errors.put(fieldName, errorMessage);
 //	        });
 	        StringBuilder response = new StringBuilder();
-	        ex.getBindingResult().getAllErrors().forEach((error) -> {
+	        ex.getBindingResult().getAllErrors().forEach(error -> {
 	        	response.append(error.getDefaultMessage()).append("\n");
 
 	        });

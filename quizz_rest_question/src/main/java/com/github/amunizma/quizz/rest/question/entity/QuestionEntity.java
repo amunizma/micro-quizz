@@ -60,34 +60,6 @@ public class QuestionEntity implements Serializable{
 	 * The used of the question.
 	 */
 	private Integer used;
-	
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        QuestionEntity question = (QuestionEntity) o;
-        return Objects.equals(questionId, question.questionId);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(questionId);
-    }
-    
-    @Override
-    public String toString() {
-    	StringBuilder sb = new StringBuilder("{");
-    	
-    	if(this.questionId != null)sb.append("questionId='").append(questionId).append('\'');
-        if(this.level != null)sb.append(", level='").append(level).append('\'');
-        if(this.difficulty != null)sb.append(", difficulty='").append(difficulty).append('\'');
-        if(this.questions != null)sb.append(", questions='").append(questions).append('\'');
-        if(this.correctAnswers != null)sb.append(", correctAnswers='").append(correctAnswers).append('\'');
-        if(this.wrongAnswers != null)sb.append(", wrongAnswers='").append(wrongAnswers).append('\'');
-        if(this.used != null)sb.append(", ages='").append(used).append('\'');
-        sb.append('}');
-    	
-        return sb.toString();
-    }
 	
 }

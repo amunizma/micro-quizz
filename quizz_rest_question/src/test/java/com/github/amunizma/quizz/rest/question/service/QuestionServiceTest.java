@@ -29,7 +29,7 @@ import com.mongodb.MongoException;
 
 
 @ExtendWith(MockitoExtension.class)
-public class QuestionServiceTest {
+class QuestionServiceTest {
     @Mock
     private QuestionRepository questionRepository;
 
@@ -47,7 +47,7 @@ public class QuestionServiceTest {
     private QuestionEntity questionEntity;
     
     @BeforeEach
-    public void setup() {
+    void setup() {
        
 		questionBaseDTO = QuestionBaseDTO.builder()
     			.level("A")
@@ -79,7 +79,7 @@ public class QuestionServiceTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_success() throws Exception {
+    void completQuestionBaseDTO_createQuestion_success() throws Exception {
 
     	// Configurar mocks
         when(questionMapper.toQuestionDTO(any(QuestionBaseDTO.class))).thenReturn(questionDTO);
@@ -95,7 +95,7 @@ public class QuestionServiceTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_BadRequestException() throws Exception {
+    void completQuestionBaseDTO_createQuestion_BadRequestException() throws Exception {
 
     	// Configurar mocks
         when(questionMapper.toQuestionDTO(any(QuestionBaseDTO.class))).thenReturn(questionDTO);
@@ -107,7 +107,7 @@ public class QuestionServiceTest {
     }
     
     @Test
-    public void completQuestionBaseDTO_createQuestion_InternalServerErrorException() throws Exception {
+    void completQuestionBaseDTO_createQuestion_InternalServerErrorException() throws Exception {
 
     	// Configurar mocks
         when(questionMapper.toQuestionDTO(any(QuestionBaseDTO.class))).thenReturn(questionDTO);

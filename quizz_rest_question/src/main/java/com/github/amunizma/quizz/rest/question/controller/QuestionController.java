@@ -29,7 +29,12 @@ public class QuestionController {
 		this.service = service;
 	}
 
-
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
 	@PostMapping
 	public ResponseEntity<?> addQuestion(@Valid @RequestBody QuestionBaseDTO request) {
 		logger.info("Received request to add a new question: {}", request.toString());

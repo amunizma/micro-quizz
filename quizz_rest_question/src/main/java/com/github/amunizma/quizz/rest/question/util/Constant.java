@@ -3,6 +3,10 @@ package com.github.amunizma.quizz.rest.question.util;
 import java.time.format.DateTimeFormatter;
 
 public class Constant {
+	
+	
+	private Constant(){}
+	
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	/** MESAGES HTTP */
