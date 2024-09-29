@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.github.amunizma.quizz</groupId>
 	<artifactId>quizz</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>quizz</name>
 	<description>Project for quizz game</description>
 	<packaging>pom</packaging>
