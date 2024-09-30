@@ -7,11 +7,11 @@
 		<artifactId>quizz</artifactId>
 		<version>0.2.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.github.amunizma.quizz.question</groupId>
-	<artifactId>quizz_rest_question</artifactId>
-	<version>0.1.1</version>
-	<name>quizz_rest_question</name>
-	<description>Project to obtain and add questions for quizz game</description>
+	<groupId>com.github.amunizma.quizz.game</groupId>
+	<artifactId>quizz_rest_game</artifactId>
+	<version>0.0.1</version>
+	<name>quizz_rest_game</name>
+	<description>Project to obtain and add games for quizz game</description>
 	<url/>
 	<licenses>
 		<license/>
