@@ -1,8 +1,10 @@
 package com.github.amunizma.quizz.rest.question.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -30,7 +33,10 @@ import com.github.amunizma.quizz.rest.question.dto.QuestionDTO;
 import com.github.amunizma.quizz.rest.question.exception.BadRequestException;
 import com.github.amunizma.quizz.rest.question.exception.ConflictException;
 import com.github.amunizma.quizz.rest.question.exception.InternalServerErrorException;
+import com.github.amunizma.quizz.rest.question.exception.NotFoundException;
+import com.github.amunizma.quizz.rest.question.exception.ServiceUnavailableException;
 import com.github.amunizma.quizz.rest.question.service.QuestionService;
+import com.mongodb.MongoException;
 
 @WebMvcTest(QuestionController.class)
 class QuestionControllerTest {
@@ -51,30 +57,40 @@ class QuestionControllerTest {
     
     private QuestionDTO questionDTO ;
     
+    private String idQuestion;
+    
     @BeforeEach
     void setup() {
-       
-		questionBaseDTO = QuestionBaseDTO.builder()
-    			.level("A")
-    			.difficulty("1")
-    			.questions(Arrays.asList("el mejor amigo del hombre"))
-    			.correctAnswers(Arrays.asList("El perro"))
-    			.wrongAnswers(Arrays.asList("El gato","el koala","el caballo"))
-    			.build();
+    	idQuestion = "5846002f-b929-4714-aa64-27f0db3508bd";
+        String level = "A";
+        String difficulty = "1";
+        List<String> questions = Arrays.asList("el mejor amigo del hombre");
+        List<String> correctAnswers = Arrays.asList("El perro");
+        List<String> wrongAnswers = Arrays.asList("El gato","el koala","el caballo");
         
-        questionDTO = QuestionDTO.builder()
-    			.level("A")
-    			.difficulty("1")
-    			.questions(Arrays.asList("el mejor amigo del hombre"))
-    			.correctAnswers(Arrays.asList("El perro"))
-    			.wrongAnswers(Arrays.asList("El gato","el koala","el caballo"))
-    			.questionId("5846002f-b929-4714-aa64-27f0db3508bd")
+ 		questionBaseDTO = QuestionBaseDTO.builder()
+     			.level(level)
+     			.difficulty(difficulty)
+     			.questions(questions)
+     			.correctAnswers(correctAnswers)
+     			.wrongAnswers(wrongAnswers)
+     			.build();
+        
+ 		questionDTO = QuestionDTO.builder()
+        		.level(level)
+    			.difficulty(difficulty)
+    			.questions(questions)
+    			.correctAnswers(correctAnswers)
+    			.wrongAnswers(wrongAnswers)
+    			.questionId(idQuestion)
     			.used(null)
     			.build();
     }
     
+    /** CREATE QUESTION */
+    
     @Test
-    void completQuestionBaseDTO_createQuestion_Created() throws Exception {
+    void completQuestionBaseDTO_createQuestion_created() throws Exception {
 
         when(questionService.createQuestion(any(QuestionBaseDTO.class))).thenReturn(questionDTO);
 
@@ -219,5 +235,82 @@ class QuestionControllerTest {
             null
         );
     }
+    
+    /** GET QUESTION */
+    
+    @Test
+    void completId_getQuestion_ok() throws Exception {
+    	
+    	when(questionService.getQuestion(anyString())).thenReturn(questionDTO);
+
+        mockMvc.perform(get("/question/{id}", idQuestion))
+        		.andExpect(status().isOk());
+    }
+    
+    @Test
+    void completId_getQuestion_notFound() throws Exception {
+    	 when(questionService.getQuestion(anyString())).thenThrow(new NotFoundException("Question not found"));
+
+    	 mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isNotFound());
+    }
+    
+    
+    @Test
+    void completId_getQuestion_serviceUnavailableException() throws Exception {
+    	 when(questionService.getQuestion(anyString())).thenThrow(new ServiceUnavailableException("Service Unavailable Exception"));
+
+    	 mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isConflict());
+    }
+    
+    @Test
+    void completId_getQuestion_internalServerErrorExceptionn() throws Exception {
+    	 when(questionService.getQuestion(anyString())).thenThrow(new InternalServerErrorException("Internal Server Error"));
+
+    	 mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isInternalServerError());
+    }
+    
+    @Test
+    void nullId_getQuestion_invokeMethod() throws Exception {
+    	idQuestion = null;
+
+    	mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void emptyId_getQuestion_invokeMethod() throws Exception {
+    	idQuestion = "";
+
+    	mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void blankId_getQuestion_badRequest() throws Exception {
+    	idQuestion = " ";
+
+    	mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void invalidId_getQuestion_badRequest() throws Exception {
+    	idQuestion = "ll";
+
+    	mockMvc.perform(get("/question/{id}", idQuestion)
+    			 .contentType(MediaType.APPLICATION_JSON))
+ 				.andExpect(status().isBadRequest());
+    }
+
+
     
 }
