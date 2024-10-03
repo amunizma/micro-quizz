@@ -49,7 +49,9 @@ public class QuestionController {
 	
 	@GetMapping("/{id}")
     public ResponseEntity<?> getQuestionById(@ValidUUID @PathVariable String id) {
+		logger.info("Received request to get question: {}", id);
 		QuestionDTO questionDTO = service.getQuestion(id);
+		logger.info("Question '{}' successfully getted.", questionDTO.toString());
 		return new ResponseEntity<>(questionDTO, HttpStatus.OK);
     }
 

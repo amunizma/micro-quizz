@@ -25,10 +25,6 @@ class ObtainIdServiceTest {
     @InjectMocks
     private ObtainIdServiceImpl obtainIdService;
 
-
-    private QuestionBaseDTO questionBaseDTO;
-    private QuestionDTO questionDTO;
-    private QuestionEntity questionEntity;
     
     @BeforeEach
     void setup() {
