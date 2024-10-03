@@ -23,7 +23,7 @@ public class QuestionBaseDTO {
 	/**
 	 * @NotBlank: se usa en cadenas; y comprueba que no sean nulas, ni vacía, ni contenga solo espacios en blancos
 	 */
-	@NotBlank(message = Constant.LEVEL_BAD_REQUEST) //Cadena no nula ni vacia
+	@NotBlank(message = Constant.LEVEL_BAD_REQUEST)
 	private String level;
 	
 	@NotBlank(message = Constant.DIFFICULTY_BAD_REQUEST)

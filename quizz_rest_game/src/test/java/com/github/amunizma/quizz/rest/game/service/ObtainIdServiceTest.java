@@ -1,4 +1,4 @@
-package com.github.amunizma.quizz.rest.question.service;
+package com.github.amunizma.quizz.rest.game.service;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,16 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.github.amunizma.quizz.rest.question.dto.QuestionBaseDTO;
-import com.github.amunizma.quizz.rest.question.dto.QuestionDTO;
-import com.github.amunizma.quizz.rest.question.entity.QuestionEntity;
-import com.github.amunizma.quizz.rest.question.respository.QuestionRepository;
+import com.github.amunizma.quizz.rest.game.respository.GameRepository;
 
 
 @ExtendWith(MockitoExtension.class)
 class ObtainIdServiceTest {
     @Mock
-    private QuestionRepository questionRepository;
+    private GameRepository gameRepository;
 
     @InjectMocks
     private ObtainIdServiceImpl obtainIdService;
@@ -34,7 +31,7 @@ class ObtainIdServiceTest {
     @Test
     void completUuidFound_existUUID_exists() {
         String uuid = "existing-uuid";
-        when(questionRepository.countByQuestionId(uuid)).thenReturn(1L);
+        when(gameRepository.countByGameId(uuid)).thenReturn(1L);
 
         boolean result = obtainIdService.existUUID(uuid);
         assertTrue(result);  
@@ -44,7 +41,7 @@ class ObtainIdServiceTest {
     @Test
     void completUuidNotFound_existUUID_notExists() {
         String uuid = "existing-uuid";
-        when(questionRepository.countByQuestionId(uuid)).thenReturn(0L);
+        when(gameRepository.countByGameId(uuid)).thenReturn(0L);
 
         boolean result = obtainIdService.existUUID(uuid);
         assertFalse(result);  
